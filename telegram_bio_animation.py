@@ -8,6 +8,7 @@ import time
 API_ID = int(os.getenv('API_ID', '0'))
 API_HASH = os.getenv('API_HASH', '')
 PHONE = os.getenv('PHONE', '')
+TELEGRAM_CODE = os.getenv('TELEGRAM_CODE', '')
 
 # Параметры анимации
 PREFIX = 'Lewis'
@@ -98,11 +99,15 @@ async def main():
                 await client.send_code_request(PHONE)
                 
                 # Запрос кода
-                code = input('Enter the code you received: ')
+                if not TELEGRAM_CODE:
+                    print('❌ TELEGRAM_CODE environment variable is not set.')
+                    print('   Set it to the code sent to your Telegram account and restart.')
+                    return
                 try:
-                    await client.sign_in(PHONE, code)
+                    await client.sign_in(PHONE, TELEGRAM_CODE)
                 except Exception as e:
                     print(f'❌ Authorization failed: {e}')
+                    print('   Make sure TELEGRAM_CODE is correct and has not expired.')
                     return
             
             print('✅ Authorization successful!')
