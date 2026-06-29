@@ -19,7 +19,7 @@ SPEED = 0.08  # секунды между символами
 CYCLE_PAUSE = 3  # пауза между циклами (секунды)
 
 # Инициализация клиента
-client = TelegramClient('session_name', API_ID, API_HASH)
+client = TelegramClient('session_name', API_ID, API_HASH, phone_number=PHONE)
 
 async def update_bio(text):
     """Обновляет биографию"""
